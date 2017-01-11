@@ -1,0 +1,22 @@
+components:
+  bus:
+    class: 'director.js::Bus'
+    with: ['@canister']
+
+  entry.factory:
+    class: './model::EntryFactory'
+
+  entry.repository.driver:
+    class: 'jfs'
+    with: ['./store.json', {pretty:true}]
+  entry.repository:
+    class: './infrastructure::JSStoreRepository'
+    with: ['@entry.repository.driver']
+
+  command.book.list:
+    class: './handlers::ListEntriesHandler'
+    with: ['@entry.repository']
+
+  command.book.add:
+    class: './handlers::AddEntryHandler'
+    with: ['@entry.repository', '@entry.factory']
